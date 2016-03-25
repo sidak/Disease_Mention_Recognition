@@ -1,0 +1,7 @@
+Number of disease headlines in 2014 data = 1561
+Total headlines in 2014 data = 	664163
+Percentage = 0.23% 
+
+Number of disease headlines in 2015 data = 1884
+Total headlines in 2015 data = 	408052
+Percentage = 0.46% 
