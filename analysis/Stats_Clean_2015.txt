@@ -1,0 +1,34 @@
+original data
+
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 839489 entries, 0 to 839488
+Data columns (total 9 columns):
+s.no             839489 non-null int64
+headline text    839489 non-null object
+timestamp1       839489 non-null object
+timestamp2       839489 non-null object
+num1             839489 non-null int64
+num2             839489 non-null int64
+num3             839489 non-null int64
+link             837803 non-null object
+num4             839489 non-null int64
+dtypes: int64(5), object(4)
+memory usage: 64.0+ MB
+None
+cleaned data
+
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 408052 entries, 0 to 839488
+Data columns (total 9 columns):
+s.no             408052 non-null int64
+headline text    408052 non-null object
+timestamp1       408052 non-null object
+timestamp2       408052 non-null object
+num1             408052 non-null int64
+num2             408052 non-null int64
+num3             408052 non-null int64
+link             408052 non-null object
+num4             408052 non-null int64
+dtypes: int64(5), object(4)
+memory usage: 31.1+ MB
+None
