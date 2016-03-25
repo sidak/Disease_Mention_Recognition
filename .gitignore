@@ -1,0 +1,9 @@
+log/*
+pdfs/*
+thoughts/*
+tmp/*
+todo/*
+data/*
+*.pdf
+*~
+*.out
