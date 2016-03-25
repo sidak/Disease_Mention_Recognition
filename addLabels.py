@@ -4,7 +4,8 @@ import sys
 
 input_filename = './' + sys.argv[1]
 disease_filename = "./" + sys.argv[2]
-output_filename = "./" + sys.argv[3]
+label_filename = "./" + sys.argv[3]
+disease_headlines_filename ="./" + sys.argv[4]
 
 data = pd.read_csv(input_filename)
 
@@ -16,7 +17,7 @@ def diseases_in_string(str):
 
 label =[]
 
-important_headlines =[]
+imp_headlines =[]
 
 num = 0
 
@@ -36,15 +37,18 @@ for frame in data['headline text']:
 		print headline_diseases
 		print "\n"
 		num+= 1
-		important_headlines.append(headline)
+		imp_headlines.append(frame)
 	else:
 		label.append(0)
 
 print label
 
 data['label'] = label
-data.to_csv(output_filename)
+data.to_csv(label_filename)
 
+disease_headlines_file = open(disease_headlines_filename, "w")
+for item in imp_headlines:
+	disease_headlines_file.write("%s\n" % item)
 
 print "the number of headlines with diseases is "
 print num
