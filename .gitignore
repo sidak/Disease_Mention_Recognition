@@ -4,6 +4,7 @@ thoughts/*
 tmp/*
 todo/*
 data/*
+trial/*
 *.pdf
 *~
 *.out
