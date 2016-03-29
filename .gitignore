@@ -5,6 +5,7 @@ tmp/*
 todo/*
 data/*
 trial/*
+info/*
 *.pdf
 *~
 *.out
