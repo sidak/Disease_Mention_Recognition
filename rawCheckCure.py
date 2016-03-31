@@ -1,5 +1,3 @@
-
-
 import pandas as pd 
 import numpy as np 
 import sys
@@ -18,12 +16,13 @@ for hline in content:
 	words = nltk.word_tokenize(hline)
 	pos = nltk.pos_tag(words)
 	
+
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
-		if(key.lower() == 'patients' or key.lower() == 'patient'):
+		if(key.lower() == 'cure' or key.lower() == 'cured'):
 			flag =1 
-		if((key.lower()!='of' and key.lower()!='with' and key.lower()!= 'suffering') and flag ==1):
+		if((key.lower()!= 'of' and key.lower()!= 'for') and flag ==1):
 			idx = i
 			break
 
@@ -39,4 +38,3 @@ for hline in content:
 			disease_name+= key
 			disease_name+= "\n"
 			output_file.write(disease_name)
-
