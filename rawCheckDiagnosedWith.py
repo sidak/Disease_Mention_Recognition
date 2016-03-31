@@ -9,14 +9,7 @@ output_filename = "./" + sys.argv[2]
 with open(input_filename) as f:
     content = f.readlines()
 
-output_file = open(output_filename, "w")
-
-
-for hline in content:
-	words = nltk.word_tokenize(hline)
-	pos = nltk.pos_tag(words)
-	
-
+def get_disease_name_diagnose_with(pos):
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
@@ -49,4 +42,15 @@ for hline in content:
 				break
 
 		disease_name+= "\n"
+	
+	return disease_name	
+
+output_file = open(output_filename, "w")
+
+for hline in content:
+	words = nltk.word_tokenize(hline)
+	pos = nltk.pos_tag(words)
+	
+	disease_name = get_disease_name_diagnose_with(pos)
+	if(disease_name!="\n"):
 		output_file.write(disease_name)
