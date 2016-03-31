@@ -9,4 +9,9 @@ data = pd.read_csv(input_filename)
 
 
 headlines = data['headline text']
-headlines.to_csv(output_filename)
+
+output_file = open(output_filename, "w")
+
+for hline in headlines:
+	output_file.write(hline)
+	output_file.write("\n")
