@@ -15,7 +15,7 @@ def get_disease_name_diagnose_with(pos):
 	for i, (key, val) in enumerate(pos):
 		if(key.lower()=='diagnosed'):
 			flag =1 
-		if(key.lower()=='with'and flag ==1):
+		if((key.lower()=='with' or key.lower()=='for') and flag ==1):
 			idx = i+1
 			break
 
@@ -43,7 +43,7 @@ def get_disease_name_diagnose_with(pos):
 
 		disease_name+= "\n"
 	
-	return disease_name	
+	return disease_name		
 
 output_file = open(output_filename, "w")
 
