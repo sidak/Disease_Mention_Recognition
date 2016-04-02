@@ -33,10 +33,10 @@ def lowercaseAndAbbreviate(str):
 		elif(prevCap == 1 and (not isUpper(str[i]))):
 			if((i-startCapIdx)>1):
 				abbvn = str[startCapIdx:i]
-				lowercase.replace(abbvn, abbvn.upper())
-			elif(str[i]<='a' and str[i]>='z'):
+				lowercase = lowercase.replace(abbvn.lower(), abbvn)
+			elif((str[i]>='a' and str[i]<='z') or (str[i]>='0' and str[i]<='9')):
 				j = i 
-				while(str[j]!=' '):
+				while(j<len(str) and str[j]!=' ' and str[j]!='.' and str[j]!=',' and str[j]!='?' and str[j]!=':' and str[j]!=';'):
 					j+=1
 				word = str[startCapIdx:j]
 				word = word.lower()
@@ -45,11 +45,8 @@ def lowercaseAndAbbreviate(str):
 				(key, val) = tags[0]
 				if(val == 'NN' or val == 'NNP'):
 					abbvn = str[startCapIdx:i]
-					lowercase.replace(abbvn, abbvn.upper())
-					
-			elif(str[i]>='0' and str[i]<='9'):
-				abbvn = str[startCapIdx:i]
-				lowercase.replace(abbvn, abbvn.upper())
+					lowercase = lowercase.replace(word, str[startCapIdx:j])
+
 			prevCap = 0 
 
 		i+=1
