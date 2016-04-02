@@ -14,8 +14,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(hline)
-	#words= hline.split()	
+	words = nltk.word_tokenize(hline)	
 	pos = nltk.pos_tag(words)
 	
 
@@ -51,4 +50,5 @@ for hline in content:
 				break
 
 		disease_name+= "\n"
-		output_file.write(disease_name)
+		if(!disease_name.isnumeric()):
+			output_file.write(disease_name)
