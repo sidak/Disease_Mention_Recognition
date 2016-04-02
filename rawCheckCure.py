@@ -23,7 +23,7 @@ for hline in content:
 		if(key.lower() == 'cure' or key.lower() == 'cured'):
 			flag =1 
 		if((key.lower()!= 'of' and key.lower()!= 'for') and flag ==1):
-			idx = i
+			idx = i-1
 			break
 
 	disease_name=""
@@ -32,9 +32,9 @@ for hline in content:
 	if idx!=-1:
 		pos1 = pos[:idx]
 		flag1 = 0
-		if(pos1[idx-1] == 'NN' or pos1[idx-1] == 'NNP' or pos1[idx-1] == 'NNS' or pos1[idx-1] == 'NNPS')
-			if(pos1[idx-2] == 'NN' or pos1[idx-2] == 'NNP' or pos1[idx-2] == 'NNS' or pos1[idx-2] == 'NNPS')
-				disease_name+= key+" "
-			disease_name+= key
+		if(idx>=2 and pos1[idx-1][1] == 'NN' or pos1[idx-1][1] == 'NNP' or pos1[idx-1][1] == 'NNS' or pos1[idx-1][1] == 'NNPS'):
+			if(idx >=3 and pos1[idx-2][1] == 'NN' or pos1[idx-2][1] == 'NNP' or pos1[idx-2][1] == 'NNS' or pos1[idx-2][1] == 'NNPS'):
+				disease_name+= pos1[idx-2][0]+" "
+			disease_name+= pos1[idx-1][0]
 			disease_name+= "\n"
 			output_file.write(disease_name)
