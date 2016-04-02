@@ -22,7 +22,7 @@ for hline in content:
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
-		if(key.lower()=='died'):
+		if(key.lower()=='died' or key.lower()=='dies'):
 			flag =1 
 		if(key.lower()=='of'and flag ==1):
 			idx = i+1
