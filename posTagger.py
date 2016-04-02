@@ -13,7 +13,10 @@ pos_tagged_file = open(pos_tagged_filename, "w")
 for frame in data['headline text']:
 	words = nltk.word_tokenize(frame)
 	pos = nltk.pos_tag(words)
+	sent = ""
 	for (key, val) in pos:
-		pos_tagged_file.write("(%s, %s) " % (key, val))
-		
-	pos_tagged_file.write("\n")
+		sent += key + "("+ val + ") "
+		#pos_tagged_file.write("(%s, %s) " % (key, val))
+	sent += "\n"
+
+	pos_tagged_file.write(sent)
