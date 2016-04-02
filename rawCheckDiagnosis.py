@@ -96,7 +96,7 @@ def get_disease_name_diagnosis(pos):
 		else:
 			seenAdj = 0
 			seenNoun = 0
-			while(idx>0):
+			while(idx>=0):
 				(key, val) = pos[idx]
 				
 				if(val == 'JJ' and seenNoun == 1):
