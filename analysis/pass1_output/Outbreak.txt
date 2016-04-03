@@ -2,8 +2,6 @@ disease
 Norovirus  
 disease  
 Arctic  
- 
- 
 listeria  
 illness  
 illness  
@@ -11,20 +9,15 @@ Virus
 Royal Caribbean Cruise Ship  
 Illness  
 Fatal Listeria  
- 
 Intestinal Virus  
- 
 melon  
  Cruise virus  
 listeria  
 listeria  
 Cruise  
 melon  
- 
- 
 listeria  
 disease  
- 
 Fight  
 Norovirus  
 new  
@@ -35,7 +28,6 @@ New York City Investigates Measles
 Ohio State  
 Mumps  
 Princeton  
- 
 fever  
 Ebola  
 Contain Ebola  
@@ -61,7 +53,6 @@ Ebola
 weather  
 meningitis  
 Los Angeles  
- 
 Pink Eye  
 ebola  
 ebola  
@@ -70,7 +61,6 @@ Ebola
 Ebola  
 Ebola  
 West Africa Ebola  
- 
 Ebola  
 Ebola  
 Ebola  
@@ -91,7 +81,6 @@ Ohio mumps
 Africa  
 Dengue  
 Ebola  
- 
 Ohio mumps  
 mumps  
 Ebola  
@@ -103,10 +92,8 @@ Ohio
 Tornado  
 Tornado  
 31-Tornado  
- 
 Arkansas tornado  
 Twister  
- 
 Tornado  
 Deadly MERS  
 tornado  
@@ -118,8 +105,6 @@ tornado
 killer  
 Conditions Brewed Tornado  
 MERS  
- 
- 
 Pakistan polio  
 Polio  
 Salmonella  
@@ -129,29 +114,18 @@ Ohio measles
 MERS  
 Fido Flu  
 Tuberculosis  
- 
- 
- 
-2010  
 2010 Salmonella  
 Cholera  
 Cholera  
- 
-2010  
-2010  
 First Ebola  
- 
 Foster Farms  
 polio  
 Record  
 Record Breaking Measles  
 measles  
 cholera  
- 
 Ebola  
- 
 norovirus  
- 
 Grasshopper  
 diseases  
 violent  
@@ -159,7 +133,6 @@ violent
 Guinea s Deadly  
 Violent  
 Ebola  
- 
 Tripura malaria  
 Tripura Malaria  
 Monrovia Ebola  
@@ -188,4 +161,3 @@ control
 Control 
 control 
 control 
-

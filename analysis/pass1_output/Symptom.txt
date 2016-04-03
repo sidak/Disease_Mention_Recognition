@@ -1,39 +1,39 @@
 concussion  
 withdrawal  
 concussion  
-flu-like  
-stroke-like  
-stroke-like  
-stroke-like  
+flu
+stroke
+stroke
+stroke
 disease  
  
-flu-like  
+flu
  
  
 Gulf War  
-flu-like  
+flu
  
 Cancer  
-concussion-like  
+concussion
 MS  
 Ebola s  
-concussion-like  
+concussion
 concussion  
-flu-like  
-flu-like  
+flu
+flu
  
-flu-like  
+flu
 Asthma  
-flu-like  
+flu
 Stages  
 Asthma  
-concussion-like  
-flu-like  
-concussion-like  
+concussion
+flu
+concussion
  
  
  
-concussion-like  
+concussion
  
 Ten  
  

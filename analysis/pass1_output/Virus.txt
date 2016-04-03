@@ -9,7 +9,7 @@ H7N9 bird flu
  
 MERS  
 stomach  
-Cruise  
+ Cruise  
  
 dengue  
  
@@ -17,10 +17,10 @@ pandemic
 Bitcoin-stealing  
  
 Rare  
-Mysterious polio-like  
+Mysterious polio
 WiFi  
 Wi-Fi  
-Has polio-like  
+Has polio
 Digital  
 Digital  
 Flu  
@@ -49,7 +49,7 @@ stomach
 fever  
 fever  
 Ebola  
-Ebola-like  
+Ebola
 Ebola  
 Ebola  
 Dendroid  
