@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import re
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -61,6 +62,7 @@ for hline in content:
 
 			disease_name = reverse(name)	
 			disease_name+= "\n"
-			output_file.write(disease_name)
+			if not re.match("^[0-9 ]+$", disease_name):
+				output_file.write(disease_name)
 	
 		
