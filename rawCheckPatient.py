@@ -31,7 +31,7 @@ for hline in content:
 
 	disease_name=""
 
-	# 2-gram
+		# 2-gram
 	if idx!=-1:
 		seenAdj = 0
 		seenNoun = 0
@@ -48,6 +48,7 @@ for hline in content:
 				break
 			idx -=1	
 
+			
 		if filters.filterDiseaseSynonyms(disease_name):
 			disease_name+= "\n"
 			if disease_name!="\n":

@@ -7,7 +7,7 @@ input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
 
 with open(input_filename) as f:
-    content = f.readlines()
+	content = f.readlines()
 
 output_file = open(output_filename, "w")
 
@@ -20,12 +20,12 @@ for hline in content:
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
-		if(key.lower() == 'patients' or key.lower() == 'patient'):
+		if(key.lower()=='patient'):
 			flag =1 
-		if((key.lower()=='of' or key.lower()=='with') and flag ==1):
+		if(flag ==1 and key.lower()=='of' ):
 			idx = i+1
 			break
-
+			
 	disease_name=""
 
 	if idx!=-1:
@@ -34,7 +34,6 @@ for hline in content:
 		for i, (key, val) in enumerate(pos1):
 			if val == 'DT' and not flag1:
 				continue
-
 			elif val == 'NN' or val == 'NNP' or val == 'NNS'or val == 'NNPS'or val == 'CD' :
 				flag1 = 1;
 				if i==0:
@@ -52,4 +51,3 @@ for hline in content:
 			disease_name+= "\n"
 			if disease_name!="\n":
 				output_file.write(disease_name)
-

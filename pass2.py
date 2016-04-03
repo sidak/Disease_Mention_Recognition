@@ -44,36 +44,20 @@ print "---------------dictionary created--------------"
 weight = {}
 weight["Vaccine_diseases"] = 34.0/38
 weight["diagnose_diseases"] = 10.0/14
-weight["Diedof_Diseases"] = 37.0/70
-weight["Treatment_Diseases"] = 50.0/233.0
+weight["died_of_diseases"] = 37.0/69
+weight["Treatment_Diseases"] = 78.0/308.0
 weight["final_diagnoses_diseases"] = 4.0/8
-weight["BattlingWith_diseases"] = 2.0/5
-weight["outbreak_of_disease"] = 3.0/14
+weight["battling_with_diseases"] = 2.0/4
 weight["diagnosed_by_diseases_1"] = 3.0/4
 weight["Symptoms_Diseases"] = 25.0/31
-weight["cure_diseases"] = 0.0
+weight["cure_diseases"] = 13.0/30
 weight["final_diagnosis_diseases"] = 21.0/27
-weight["Battling_diseases"] = 12.0/59
+weight["battling_diseases"] = 22.0/87
 weight["diagnosed_with_for_diseases"] = 78.0/85
-weight["outbreak_diseases"] = 92.0/150
+weight["outbreak_diseases"] = 102.0/128
+weight["outbreak_of_diseases"] = 3.0/7
 weight["hospital_with_diseases"] = 12.0/14
 
-total = 0.0
-
-#outbreak > 92/150
-#diagnosed_with_for > 78/85
-#battling > 12/59
-#diagnosed_by > 3/4
-#symptoms > 25/31
-#diagnosis > 21/27
-#cure > 0
-#outbreak of > 3/14
-#battlingwith > 2/5
-#diagnoses > 4/8
-#treatment > 50/233
-#died of > 37/70
-#diagnose > 10/14
-#vaccine > 34/38
 
 for root in root_based_dictionary:
 	print "------------------" + root + " starts------------------"
