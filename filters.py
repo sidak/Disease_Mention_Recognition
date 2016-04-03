@@ -7,13 +7,14 @@ disease_syns =[
 	"infection",
 	"infections",
 	"illness",
-	"ilnesses",
+	"illnesses",
 	"injury",
 	"injuries",
 	"bruise",
 	"bruises",
 	"virus",
-	"fever"
+	"fever",
+	"flu"
 ]
 
 natural_disasters=[
