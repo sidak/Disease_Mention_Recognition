@@ -25,7 +25,7 @@ def reverse(sentence):
     return answer
 
 for hline in content:
-	words = nltk.word_tokenize(hline)	
+	words = nltk.word_tokenize(lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 
@@ -39,24 +39,21 @@ for hline in content:
 	disease_name=""
 
 	if idx!=-1:
-		pos2 = pos[:idx]
-		pos1 = pos2[::-1]
-		flag1 = 0
-		for i, (key, val) in enumerate(pos1):
-			if val == 'DT' and not flag1:
-				continue
-			elif val == 'NN' or val == 'NNP' or val == 'NNS'or val == 'NNPS'or val == 'CD' :
-				flag1 = 1;
-				if i==0:
-					disease_name+=" " + key
-				elif i>0 and (pos1[i-1][1] == 'NN' or pos1[i-1][1] == 'NNP'or pos1[i-1][1] == 'NNS' or pos1[i-1][1] == 'NNPS ' or pos1[i-1][1] == 'CD' or pos1[i-1][1] == 'JJ'):
-					disease_name+= " "+ key	
-
-			elif val == 'JJ' and not flag1:
-				disease_name+=" " + key
-
+		seenAdj = 0
+		seenNoun = 0
+		while(idx>=0):
+			(key, val) = pos[idx]
+			
+			if(val == 'JJ' and seenNoun == 1):
+				seenAdj = 1
+				disease_name= key+" " + disease_name
+			elif((val == 'NN' or val == 'NNP') and seenAdj == 0):
+				seenNoun = 1
+				disease_name= key+" " + disease_name
 			else:
 				break
-		disease_name =reverse(disease_name)
-		disease_name+= "\n"
-		output_file.write(disease_name)
+			idx -=1	
+		disease_name = reverse(disease_name)	
+		if filters.filterDiseaseSynonyms(disease_name):
+			disease_name+= "\n"
+			filter_dname_symptoms(disease_name)

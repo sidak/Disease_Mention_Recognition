@@ -43,26 +43,26 @@ for hline in content:
 	disease_name=""
 	name = ""
 	if idx!=-1:
-			pos2 = pos[:idx]
-			pos1 = pos2[::-1]
-			flag1 = 0
-			for i, (key,val) in enumerate(pos1):
-				if val == 'NN' or val == 'NNP' or val == 'NNS'or val == 'NNPS'or val == 'CD' :
-					flag1 = 1;
-					if i>0 and (pos1[i-1][1] == 'NN' or pos1[i-1][1] == 'NNP'or pos1[i-1][1] == 'NNS' or pos1[i-1][1] == 'NNPS ' or pos1[i-1][1] == 'CD' or pos1[i-1][1] == 'JJ'):
-						name+= " "+key	
-					elif i==0:
-						name+= " "+key
-				
-				elif val == 'JJ' and not flag1:
+		pos2 = pos[:idx]
+		pos1 = pos2[::-1]
+		flag1 = 0
+		for i, (key,val) in enumerate(pos1):
+			if val == 'NN' or val == 'NNP' or val == 'NNS'or val == 'NNPS'or val == 'CD' :
+				flag1 = 1;
+				if i>0 and (pos1[i-1][1] == 'NN' or pos1[i-1][1] == 'NNP'or pos1[i-1][1] == 'NNS' or pos1[i-1][1] == 'NNPS ' or pos1[i-1][1] == 'CD' or pos1[i-1][1] == 'JJ'):
+					name+= " "+key	
+				elif i==0:
 					name+= " "+key
+			
+			elif val == 'JJ' and not flag1:
+				name+= " "+key
 
-				else:
-					break
+			else:
+				break
 
-			disease_name = reverse(name)	
-			disease_name+= "\n"
-			if not re.match("^[0-9 ]+$", disease_name):
-				output_file.write(disease_name)
-	
+		disease_name = reverse(name)	
+		disease_name+= "\n"
+		if not re.match("^[0-9 ]+$", disease_name):
+			output_file.write(disease_name)
+
 		

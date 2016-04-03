@@ -20,7 +20,7 @@ for hline in content:
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
-		if(key.lower()=='cure'):
+		if(key.lower()=='treatment'):
 			flag =1 
 		if(flag ==1 and key.lower()=='of' ):
 			idx = i+1
