@@ -1,0 +1,5 @@
+pneumonia 
+fraud 
+eye trouble 
+eyesight problem 
+injuries 
