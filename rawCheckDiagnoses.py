@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import filters
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -120,5 +121,5 @@ for hline in content:
 
 		pos = nltk.pos_tag(words)
 		disease_name = get_disease_name_diagnoses(pos)
-		if(disease_name!="\n"):
+		if(filters.filterDiseaseSynonyms(disease_name) and disease_name!="\n"):
 			output_file.write(disease_name)
