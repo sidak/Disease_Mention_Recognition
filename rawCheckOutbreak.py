@@ -62,10 +62,10 @@ for hline in content:
 			else:
 				break
 
-			disease_name = reverse(name)	
-			if filters.filterDiseaseSynonyms(disease_name):
-				if filters.filterNaturalDisasters(disease_name):
-					if not re.match("^[0-9 ]+$", disease_name):
-						disease_name+= "\n"
-						if disease_name!="\n":
-							output_file.write(disease_name)
+		disease_name = reverse(name)	
+		if filters.filterDiseaseSynonyms(disease_name):
+			if filters.filterNaturalDisasters(disease_name):
+				if not re.match("^[0-9 ]+$", disease_name):
+					disease_name+= "\n"
+					if disease_name!="\n":
+						output_file.write(disease_name)

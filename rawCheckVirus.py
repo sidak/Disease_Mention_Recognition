@@ -1,8 +1,8 @@
 import sys
 import nltk
 import re
-from preprocess import *
-from filters import *
+import preprocess
+import filters
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -31,7 +31,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(lowercaseAndAbbreviate(hline))
+	words = nltk.word_tokenize(preprocess.lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 	flag =0 
@@ -62,6 +62,6 @@ for hline in content:
 		disease_name = reverse(disease_name)	
 		if filters.filterDiseaseSynonyms(disease_name):
 			disease_name+= "\n"
-			filter_dname_symptoms(disease_name)
+			output_file.write(disease_name)
 	
 		
