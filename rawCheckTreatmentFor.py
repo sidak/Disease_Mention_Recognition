@@ -15,7 +15,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(lowercaseAndAbbreviate(hline))
+	words = nltk.word_tokenize(preprocess.lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 

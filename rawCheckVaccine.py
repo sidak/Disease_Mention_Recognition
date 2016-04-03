@@ -36,7 +36,7 @@ for hline in content:
 	idx = -1
 	for i, (key, val) in enumerate(pos):
 		if(key.lower()=='vaccine'):
-			idx = i
+			idx = i-1
 			break
 			
 	disease_name=""
@@ -56,8 +56,7 @@ for hline in content:
 			else:
 				break
 			idx -=1	
-			
-		disease_name = reverse(disease_name)	
+
 		if filters.filterDiseaseSynonyms(disease_name):
 			if not re.match("^[0-9 ]+$", disease_name):
 				disease_name+= "\n"

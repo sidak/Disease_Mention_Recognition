@@ -39,7 +39,7 @@ for hline in content:
 	idx = -1
 	for i, (key, val) in enumerate(pos):
 		if(key.lower()=='symptom' or key.lower()=='symptoms'):
-			idx = i
+			idx = i -1 
 			break
 		
 
@@ -60,7 +60,6 @@ for hline in content:
 				break
 			idx -=1	
 
-		disease_name = reverse(disease_name)	
 		if filters.filterDiseaseSynonyms(disease_name):
 			disease_name+= "\n"
 			filter_dname_symptoms(disease_name)
