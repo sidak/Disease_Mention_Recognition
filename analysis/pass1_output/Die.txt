@@ -10,7 +10,6 @@ head injury
 injuries 
 Manaus 
 anorexia 
-72 
 injuries 
 beating 
 beating 
@@ -34,14 +33,11 @@ accidental overdose
 toxic mix 
 internal bleeding 
 natural causes 
-88 
 self-inflicted asphyxiation 
 injuries 
-81 
 air pollution 
 heart disease 
 heart disease 
-25 
 hunger 
 alcohol poisoning 
 heart disease 
@@ -69,7 +65,6 @@ internal
 internal injuries 
 
 multiple internal injuries 
-88 
 heroin overdose 
 accidental heroin overdose 
 multiple internal injuries 
