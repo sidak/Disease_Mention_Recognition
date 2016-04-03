@@ -7,7 +7,7 @@ import os
 import operator
 from os import path
 
-dir_path = './data/disease_names/'
+dir_path = './data/disease_names_2015/'
 output_filename = './analysis/' + sys.argv[1]
 #read file names and there content	
 
@@ -56,7 +56,9 @@ weight["battling_diseases"] = 22.0/87
 weight["diagnosed_with_for_diseases"] = 78.0/85
 weight["outbreak_diseases"] = 102.0/128
 weight["outbreak_of_diseases"] = 3.0/7
-weight["hospital_with_diseases"] = 11.0/14
+weight["hospital_with_diseases"] = 12.0/14
+weight["virus_diseases"] = 80.0/146.0
+weight["treatment_for_diseases"] = 8.0/25.0
 
 
 for root in root_based_dictionary:
