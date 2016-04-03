@@ -3,9 +3,10 @@ pdfs/*
 thoughts/*
 tmp/*
 todo/*
-data/*
+data/tmp/*
 trial/*
 info/*
 *.pdf
 *~
 *.out
+images/
