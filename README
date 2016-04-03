@@ -1,0 +1,5 @@
+## How to run the system
+
+bash ./keywordHeadlines2015.sh
+bash ./runRawChecks.sh
+python pass2.py test_set_output.txt
