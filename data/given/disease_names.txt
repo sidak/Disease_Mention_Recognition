@@ -1,0 +1,95 @@
+adenovirus
+trypanosomiasis
+anthrax
+influenza
+h5n1
+h7n9
+babesiosis
+meningitis
+botulism
+tuberculosis
+tb
+bronchitis
+bronchiolitis
+brucellosis
+campylobacter
+chicken pox
+chickenpox
+chikungunya
+cholera
+swine flu
+swine fever
+conjunctivitis
+coronavirus
+cough
+fever
+dengue
+diarrhea
+diphtheria
+dysentery
+e coli
+e. coli
+ebola
+encephalitis
+enterovirus
+anaemia
+filariasis
+hand-foot-and-mouth
+gastroenteritis
+gonorrhea
+h. pylori
+h pylori
+hand, foot and mouth disease
+hantavirus
+hepatitis
+hepatitis a
+hepatitis-a
+hepatitis b
+hepatitis c
+hepatitis d
+hepatitis e
+hepatitis-b
+hepatitis-c
+hepatitis-d
+hepatitis-e
+herpes
+coxsackiea
+enterovirus
+aids
+hiv
+a.i.d.s.
+h1n1
+h3n2
+encephalitis
+leishmaniasis
+malaria
+measles
+meningitis
+mers
+mers-cov
+mumps
+norovirus
+pasteurellosis
+plague
+pneumonia
+poisoning
+polio
+rabies
+rickettsia
+rotavirus
+rubella
+salmonella
+sars
+severe acute respiratory syndrome
+scabies
+scrub typhus
+shigellosis
+smallpox
+staph
+syphilis
+tetanus
+toxoplasmosis
+trichinosis
+trypanosomiasis
+typhoid
+typhus
