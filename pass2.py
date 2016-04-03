@@ -58,21 +58,6 @@ weight["diagnosed_with_for_diseases"] = 78.0/85
 weight["outbreak_diseases"] = 92.0/150
 weight["hospital_with_diseases"] = 12.0/14
 
-#outbreak > 92/150
-#diagnosed_with_for > 78/85
-#battling > 12/59
-#diagnosed_by > 3/4
-#symptoms > 25/31
-#diagnosis > 21/27
-#cure > 0
-#outbreak of > 3/14
-#battlingwith > 2/5
-#diagnoses > 4/8
-#treatment > 50/233
-#died of > 37/70
-#diagnose > 10/14
-#vaccine > 34/38
->>>>>>> ee2e7ffd163875a4261336ebea9e1b9c13057a40
 
 for root in root_based_dictionary:
 	print "------------------" + root + " starts------------------"
