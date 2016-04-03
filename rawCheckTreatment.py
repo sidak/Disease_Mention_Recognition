@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import re
+import filters
+import preprocess
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -26,7 +29,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(hline)
+	words = nltk.word_tokenize(lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 	flag =0 
@@ -34,6 +37,11 @@ for hline in content:
 	for i, (key, val) in enumerate(pos):
 		if(key.lower()=='treatment' or key.lower()=='treatments'):
 			idx = i
+			flag = 1
+		if(key.lower()=='for' and flag == 1):
+			idx = -1
+			break
+		elif (flag == 1):
 			break
 		
 
@@ -57,7 +65,9 @@ for hline in content:
 					break
 
 			disease_name = reverse(disease_name)	
-			disease_name+= "\n"
-			output_file.write(disease_name)
-	
+			if filters.filterDiseaseSynonyms(disease_name):
+				disease_name+= "\n"
+				if disease_name!="\n":
+					output_file.write(disease_name)
+
 		
