@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np 
 import nltk 
 import sys
-
+import re
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -12,6 +12,8 @@ with open(input_filename) as f:
 
 output_file = open(output_filename, "w")
 
+def hasNumbers(inputString):
+	return bool(re.search(r'\d', inputString))
 
 for hline in content:
 	words = nltk.word_tokenize(hline)	
@@ -21,7 +23,7 @@ for hline in content:
 	flag =0 
 	idx = -1
 	for i, (key, val) in enumerate(pos):
-		if(key.lower()=='died' or key.lower()=='dies'):
+		if(key.lower()=='died'):
 			flag =1 
 		if(key.lower()=='of'and flag ==1):
 			idx = i+1
@@ -50,5 +52,5 @@ for hline in content:
 				break
 
 		disease_name+= "\n"
-		if(!disease_name.isnumeric()):
+		if not re.match("^[0-9 ]+$", disease_name):
 			output_file.write(disease_name)
