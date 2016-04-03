@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import preprocess
+import filters
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -13,7 +15,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(hline)
+	words = nltk.word_tokenize(preprocess.lowercaseAndAbbreviate(hline))	
 	pos = nltk.pos_tag(words)
 	
 
@@ -22,19 +24,32 @@ for hline in content:
 	for i, (key, val) in enumerate(pos):
 		if(key.lower() == 'cure' or key.lower() == 'cured'):
 			flag =1 
-		if((key.lower()!= 'of' and key.lower()!= 'for') and flag ==1):
-			idx = i-1
+			idx = i-1 
+		if((key.lower()== 'of' or key.lower()== 'for') and flag ==1):
+			idx = -1
+			break
+		elif (flag == 1):
 			break
 
 	disease_name=""
 
-	# 2-gram
-	if idx!=-1:
-		pos1 = pos[:idx]
-		flag1 = 0
-		if(idx>=2 and pos1[idx-1][1] == 'NN' or pos1[idx-1][1] == 'NNP' or pos1[idx-1][1] == 'NNS' or pos1[idx-1][1] == 'NNPS'):
-			if(idx >=3 and pos1[idx-2][1] == 'NN' or pos1[idx-2][1] == 'NNP' or pos1[idx-2][1] == 'NNS' or pos1[idx-2][1] == 'NNPS'):
-				disease_name+= pos1[idx-2][0]+" "
-			disease_name+= pos1[idx-1][0]
-			disease_name+= "\n"
+	seenAdj = 0
+	seenNoun = 0
+	while(idx>=0):
+		(key, val) = pos[idx]
+		
+		if(val == 'JJ' and seenNoun == 1):
+			seenAdj = 1
+			disease_name= key+" " + disease_name
+		elif((val == 'NN' or val == 'NNP') and seenAdj == 0):
+			seenNoun = 1
+			disease_name= key+" " + disease_name
+		else:
+			break
+
+		idx -=1			
+
+	if filters.filterDiseaseSynonyms(disease_name):
+		disease_name+= "\n"
+		if disease_name!="\n":
 			output_file.write(disease_name)
