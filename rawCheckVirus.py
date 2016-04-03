@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import re
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -18,6 +19,10 @@ def reverse(sentence):
     answer = temp + ' ' + answer
     return answer
 
+def filter_dname_virus(disease_name):
+	if 'like' in disease_name:
+		disease_name = re.sub('- *like *$', '', disease_name)
+	output_file.write(disease_name)
  
 with open(input_filename) as f:
     content = f.readlines()
@@ -58,6 +63,6 @@ for hline in content:
 
 			disease_name = reverse(disease_name)	
 			disease_name+= "\n"
-			output_file.write(disease_name)
+			filter_dname_virus(disease_name)
 	
 		
