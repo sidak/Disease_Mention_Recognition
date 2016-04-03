@@ -1,31 +1,23 @@
 overdose 
-injuries 
-
 drug overdose 
-
 overdose 
 head 
 internal injuries 
 head injury 
-injuries 
-Manaus 
 anorexia 
-72 
-injuries 
 beating 
 beating 
 beating 
-
-
-illness 
 apparent drug overdose 
-
 brain injuries 
 smoking-related diseases 
 malnutrition 
+Rattlesnake Bite 
 hypothermia 
 hypothermia 
+Toxic Drug Mix 
 drug mix 
+mixed Drug Overdose 
 acute mixed drug intoxication 
 accidental drug overdose 
 acute mixed drug intoxication 
@@ -34,23 +26,24 @@ accidental overdose
 toxic mix 
 internal bleeding 
 natural causes 
-88 
 self-inflicted asphyxiation 
-injuries 
-81 
-air pollution 
+Drug Overdose 
+Smoke 
 heart disease 
 heart disease 
-25 
 hunger 
 alcohol poisoning 
 heart disease 
+Chicken Pox 
 heart disease 
 suffocation 
 heart failure 
 AIDS 
 wounds 
+self-inflicted Wound police 
 drugs 
+drugs 
+Cancer 
 pneumonia 
 heroin overdose 
 heroin 
@@ -58,20 +51,19 @@ pneumonia
 heroin overdose 
 heroin 
 heroin overdose 
-2014 official figures 
 liver cancer 
-
 blunt force trauma 
 dehydration 
 dehydration 
 internal 
 internal 
 internal injuries 
-
 multiple internal injuries 
-88 
+Multiple 
 heroin overdose 
 accidental heroin overdose 
 multiple internal injuries 
 internal injuries 
+Mad 
 gunshot wound police 
+Hypothermia 
