@@ -45,7 +45,7 @@ weight = {}
 weight["Vaccine_diseases"] = 34.0/38
 weight["diagnose_diseases"] = 10.0/14
 weight["Diedof_Diseases"] = 37.0/70
-weight["Treatment_Diseases"] = 50.0/233
+weight["Treatment_Diseases"] = 50.0/233.0
 weight["final_diagnoses_diseases"] = 4.0/8
 weight["BattlingWith_diseases"] = 2.0/5
 weight["outbreak_of_disease"] = 3.0/14
@@ -75,13 +75,13 @@ total = 0.0
 
 for root in root_based_dictionary:
 	print "------------------" + root + " starts------------------"
-	weight[root] = len(root_based_dictionary[root])
-	total = total + weight[root]
+	#weight[root] = len(root_based_dictionary[root])
+	#total = total + weight[root]
 	print root_based_dictionary[root]
 	print diseases[root]
 
-for root in root_based_dictionary:
-	weight[root] = weight[root]/total
+#for root in root_based_dictionary:
+#	weight[root] = weight[root]/total
 
 #equal weights for now
 print "---------------weights assigned----------------"
@@ -91,7 +91,7 @@ print "---------------weights assigned----------------"
 for disease in disease_set:
 	for root in root_based_dictionary:
 		if(disease in root_based_dictionary[root]):
-			disease_set[disease] = disease_set[disease] + weight[root]*100 + root_based_dictionary[root][disease]
+			disease_set[disease] = disease_set[disease] + weight[root]*1000 + root_based_dictionary[root][disease]
 			file_set[disease] = file_set[disease] + root + ", "
 
 sorted_disease_set = sorted(disease_set.items(), key=operator.itemgetter(1), reverse = True)
@@ -106,6 +106,9 @@ for key,value in sorted_disease_set:
 	output_file.write(file_set[key])
 	output_file.write("\n")
 
+for key in weight:
+	print key
+	print weight[key]
 
 
 
