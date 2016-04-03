@@ -56,6 +56,8 @@ weight["final_diagnosis_diseases"] = 21.0/27
 weight["Battling_diseases"] = 12.0/59
 weight["diagnosed_with_for_diseases"] = 78.0/85
 weight["outbreak_diseases"] = 92.0/150
+weight["hospital_with_diseases"] = 12.0/14
+
 total = 0.0
 
 #outbreak > 92/150
