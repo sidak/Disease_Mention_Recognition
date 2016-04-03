@@ -70,6 +70,9 @@ def get_disease_name_diagnoses(pos):
 			if(key.lower()=='by'):
 				direc = 'l'
 				idx = i-2
+			# try to combine over here	
+			elif(key.lower()=='with'):
+				idx = -1
 			break	
 
 	disease_name=""
