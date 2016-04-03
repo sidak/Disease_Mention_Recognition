@@ -2,7 +2,10 @@ import pandas as pd
 import numpy as np 
 import nltk 
 import sys
+import re
 
+import filters
+import preprocess
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -25,7 +28,7 @@ def reverse(sentence):
     return answer
 
 for hline in content:
-	words = nltk.word_tokenize(hline)	
+	words = nltk.word_tokenize(preprocess.lowercaseAndAbbreviate(hline))	
 	pos = nltk.pos_tag(words)
 	
 
@@ -57,6 +60,12 @@ for hline in content:
 
 			else:
 				break
+		
 		disease_name =reverse(disease_name)
-		disease_name+= "\n"
-		output_file.write(disease_name)
+		if filters.filterDiseaseSynonyms(disease_name):
+			if not re.match("^[0-9 ]+$", disease_name):
+				disease_name+= "\n"
+				if disease_name!="\n":
+					output_file.write(disease_name)
+
+		

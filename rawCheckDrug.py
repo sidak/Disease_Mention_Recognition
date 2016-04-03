@@ -3,6 +3,8 @@ import numpy as np
 import sys
 import nltk
 import re
+import filters
+import preprocess
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -27,7 +29,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(hline)
+	words = nltk.word_tokenize(preprocess.lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 	flag =0 
@@ -58,8 +60,9 @@ for hline in content:
 					break
 
 			disease_name = reverse(disease_name)	
-			disease_name+= "\n"
-			if not re.match("^[0-9 ]+$", disease_name):
-				output_file.write(disease_name)
-	
+			if filters.filterDiseaseSynonyms(disease_name):
+				if not re.match("^[0-9 ]+$", disease_name):
+					disease_name+= "\n"
+					output_file.write(disease_name)
+
 		

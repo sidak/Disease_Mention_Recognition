@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np 
 import sys
 import nltk
+import filters
+import preprocess
 
 input_filename = './' + sys.argv[1]
 output_filename = "./" + sys.argv[2]
@@ -15,7 +17,7 @@ output_file = open(output_filename, "w")
 
 
 for hline in content:
-	words = nltk.word_tokenize(hline)
+	words = nltk.word_tokenize(lowercaseAndAbbreviate(hline))
 	pos = nltk.pos_tag(words)
 	
 	flag =0 
@@ -31,12 +33,23 @@ for hline in content:
 
 	# 2-gram
 	if idx!=-1:
-		pos1 = pos[:idx]
-		flag1 = 0
-		if(pos1[idx-1] == 'NN' or pos1[idx-1] == 'NNP' or pos1[idx-1] == 'NNS' or pos1[idx-1] == 'NNPS')
-			if(pos1[idx-2] == 'NN' or pos1[idx-2] == 'NNP' or pos1[idx-2] == 'NNS' or pos1[idx-2] == 'NNPS')
-				disease_name+= key+" "
-			disease_name+= key
+		seenAdj = 0
+		seenNoun = 0
+		while(idx>=0):
+			(key, val) = pos[idx]
+			
+			if(val == 'JJ' and seenNoun == 1):
+				seenAdj = 1
+				disease_name= key+" " + disease_name
+			elif((val == 'NN' or val == 'NNP') and seenAdj == 0):
+				seenNoun = 1
+				disease_name= key+" " + disease_name
+			else:
+				break
+			idx -=1	
+
+		if filters.filterDiseaseSynonyms(disease_name):
 			disease_name+= "\n"
-			output_file.write(disease_name)
+			if disease_name!="\n":
+				output_file.write(disease_name)
 
