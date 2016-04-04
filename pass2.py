@@ -4,17 +4,20 @@
 
 import sys
 import os
+import subprocess
 import operator
 from os import path
 
-dir_path = './data/disease_names_2015/'
+dir_path = './data/disease_names/'
 output_filename = './analysis/' + sys.argv[1]
+output_total_disease = './analysis/' + sys.argv[2]
 #read file names and there content	
 
 root_based_dictionary = {}
 disease_set = {}
 file_set = {}
 diseases = {}
+total_disease_set = {}
 
 for fil in os.listdir(dir_path):
 	disease_count = 0
@@ -33,6 +36,7 @@ for fil in os.listdir(dir_path):
 			else:
 				disease_dictionary[line] = 1
 				disease_set[line] = 0
+				total_disease_set[line] = 0
 				file_set[line] = " "
 
 	diseases[filename] = disease_count
@@ -60,6 +64,19 @@ weight["hospital_with_diseases"] = 12.0/14
 weight["virus_diseases"] = 80.0/146.0
 weight["treatment_for_diseases"] = 8.0/25.0
 
+output_disease_file = open(output_total_disease, "w")
+
+for disease in total_disease_set:
+	cmd_str = "grep -i -w -c " + "\"" + disease + "\"" + " ./data/headline_text/2014_headline_text.txt"
+	total_disease_set[disease] = subprocess.call(cmd_str, shell = True)
+	print total_disease_set[disease]
+	output_disease_file.write(disease+"--")
+	if(total_disease_set[disease] == 0):
+		output_disease_file.write("0")
+	else:
+		output_disease_file.write(total_disease_set[disease])
+	output_disease_file.write("\n")
+
 
 for root in root_based_dictionary:
 	print "------------------" + root + " starts------------------"
@@ -79,7 +96,7 @@ print "---------------weights assigned----------------"
 for disease in disease_set:
 	for root in root_based_dictionary:
 		if(disease in root_based_dictionary[root]):
-			disease_set[disease] = disease_set[disease] + weight[root]*1000 + root_based_dictionary[root][disease]
+			disease_set[disease] = disease_set[disease] + (weight[root]*1000 * ((root_based_dictionary[root][disease]*1.0)/total_disease_set[disease]))
 			file_set[disease] = file_set[disease] + root + ", "
 
 sorted_disease_set = sorted(disease_set.items(), key=operator.itemgetter(1), reverse = True)
