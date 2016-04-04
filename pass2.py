@@ -128,7 +128,7 @@ for disease in disease_set:
 
 				#calculate probability with normalized weights
 					
-				disease_set[disease] = disease_set[disease] + (weight[root]*1000 + ((root_based_dictionary[root][disease]*1.0)))
+				disease_set[disease] = disease_set[disease] + (weight[root] * ((root_based_dictionary[root][disease]*1.0)/total_disease_set[disease]))
 				file_set[disease] = file_set[disease] + root + ", "
 
 sorted_disease_set = sorted(disease_set.items(), key=operator.itemgetter(1), reverse = True)
