@@ -4,13 +4,17 @@
 
 import sys
 import os
+import commands
 import subprocess
 import operator
+from subprocess import Popen, PIPE
 from os import path
 
 dir_path = './data/disease_names/'
 output_filename = './analysis/' + sys.argv[1]
 output_total_disease = './analysis/' + sys.argv[2]
+input_filename = './analysis/total_diseases.txt'
+
 #read file names and there content	
 
 root_based_dictionary = {}
@@ -36,7 +40,7 @@ for fil in os.listdir(dir_path):
 			else:
 				disease_dictionary[line] = 1
 				disease_set[line] = 0
-				total_disease_set[line] = 0
+				total_disease_set[line] = 1
 				file_set[line] = " "
 
 	diseases[filename] = disease_count
@@ -64,58 +68,76 @@ weight["hospital_with_diseases"] = 12.0/14
 weight["virus_diseases"] = 80.0/146.0
 weight["treatment_for_diseases"] = 8.0/25.0
 
-output_disease_file = open(output_total_disease, "w")
-
-for disease in total_disease_set:
-	cmd_str = "grep -i -w -c " + "\"" + disease + "\"" + " ./data/headline_text/2014_headline_text.txt"
-	total_disease_set[disease] = subprocess.call(cmd_str, shell = True)
-	print total_disease_set[disease]
-	output_disease_file.write(disease+"--")
-	if(total_disease_set[disease] == 0):
-		output_disease_file.write("0")
-	else:
-		output_disease_file.write(total_disease_set[disease])
-	output_disease_file.write("\n")
-
-
-for root in root_based_dictionary:
-	print "------------------" + root + " starts------------------"
-	#weight[root] = len(root_based_dictionary[root])
-	#total = total + weight[root]
-	print root_based_dictionary[root]
-	print diseases[root]
-
-#for root in root_based_dictionary:
-#	weight[root] = weight[root]/total
-
-#equal weights for now
 print "---------------weights assigned----------------"
 
+#get total number of diseases (we got from pass1) in the file
+
+# for disease in total_disease_set:
+# 	cmd_str = "grep -i -w -c " + "\"" + disease + "\"" + " ./data/headline_text/2014_headline_text.txt"
+
+# 	total_disease_set[disease] = commands.getstatusoutput(cmd_str)[1]
+# 	print disease + " - -- " + str(total_disease_set[disease])
+# 	output_disease_file.write(disease+"--")
+# 	output_disease_file.write(str(total_disease_set[disease]))
+# 	output_disease_file.write("\n")
+
+output_disease_file = open(output_total_disease, "w")
+
+with open(input_filename) as f:
+    content = f.readlines()
+
+for line in content:
+	line = line.strip("\n")
+	x = line.split("--")
+
+	if(x[1] != ''):
+		x[1] = int(x[1])
+
+	if (isinstance(x[1], (int, long))):
+		total_disease_set[x[0]] = int(x[1])
+	else:
+		total_disease_set[x[0]] = 1
+
+print "---------------diseases extracted----------------"
+
+
 #frequency analysis begins
+
+disease_in_features = {}
+
+#get disease names in features
+
+for disease in total_disease_set:
+	disease_in_features[disease] = 0
+	for root in root_based_dictionary:
+		if(disease in root_based_dictionary[root]):
+			disease_in_features[disease] = disease_in_features[disease] + root_based_dictionary[root][disease]
+
+
+output_file = open(output_filename, "w")
+
+#calculate probability
 
 for disease in disease_set:
 	for root in root_based_dictionary:
 		if(disease in root_based_dictionary[root]):
-			disease_set[disease] = disease_set[disease] + (weight[root]*1000 * ((root_based_dictionary[root][disease]*1.0)/total_disease_set[disease]))
-			file_set[disease] = file_set[disease] + root + ", "
+			if(total_disease_set[disease] >= 1):
+
+				if(total_disease_set[disease] < root_based_dictionary[root][disease]):
+					total_disease_set[disease] = root_based_dictionary[root][disease]
+
+				#calculate probability with normalized weights
+					
+				disease_set[disease] = disease_set[disease] + (weight[root]*1000 + ((root_based_dictionary[root][disease]*1.0)))
+				file_set[disease] = file_set[disease] + root + ", "
 
 sorted_disease_set = sorted(disease_set.items(), key=operator.itemgetter(1), reverse = True)
-print sorted_disease_set
+
+#print sorted_disease_set
 
 print "---------------frequency analysis done--------------"
 
-output_file = open(output_filename, "w")
-
 for key,value in sorted_disease_set:
-	output_file.write(key + "------ ")
+	output_file.write(key + "--")
 	output_file.write(file_set[key])
 	output_file.write("\n")
-
-for key in weight:
-	print key
-	print weight[key]
-
-
-
-#
-
