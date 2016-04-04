@@ -1,128 +1,117 @@
-Norovirus  
-arctic  
-listeria  
-Royal Caribbean Cruise Ship  
-Fatal Listeria  
-melon  
- Cruise virus  
-listeria  
-listeria  
-Cruise  
-melon  
-listeria  
-Fight  
-Norovirus  
-new  
-Listeria  
-foot-and-mouth  
-Foster farms Salmonella  
-measles  
-Ohio State  
-mumps  
-Princeton  
-Ebola  
-Contain Ebola  
-Ebola  
-mumps  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-California measles  
-Ebola  
-Ebola  
-Fight Africa Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-weather  
-meningitis  
-Los angeles  
-Pink Eye  
-ebola  
-ebola  
-doctors battle Ebola  
-Ebola  
-Ebola  
-Ebola  
-West Africa Ebola  
-Ebola  
-Ebola  
-Ebola  
-West Africa Ebola  
-Ebola  
-Foster farms Salmonella  
-cruise ship  
-Foster farms Salmonella  
-Ebola  
-Ohio mumps  
-Ebola  
-Ebola  
-Ebola  
-mumps  
-West Africa Ebola  
-Ohio mumps  
-Ohio mumps  
-Africa  
-Dengue  
-Ebola  
-Ohio mumps  
-mumps  
-Ebola  
-Ebola  
-Ebola  
-measles  
-Ohio  
-31-Tornado  
-Twister  
-MERS  
-severe  
-severe  
-multistate salmonella  
-killer  
-behind MERS  
-Pakistan polio  
-Polio  
-Salmonella  
-Ebola  
-Ohio measles  
-Ohio measles  
-MERS  
-Fido Flu  
-Tuberculosis  
-2010 Salmonella  
-Cholera  
-Cholera  
-Ebola  
-Foster farms  
-polio  
-Record  
-Record breaking measles  
-measles  
-cholera  
-Ebola  
-norovirus  
-Grasshopper  
-violent  
-violent  
-deadly  
-Violent  
-Ebola  
-Tripura malaria  
-Tripura malaria  
-Monrovia Ebola  
-Ebola  
-Horrific Ebola  
-Ebola  
-e. coli  
-Ebola  
-Ebola  
-Ebola  
-Ebola  
-Ohio mumps  
+Norovirus
+listeria
+Ship
+Listeria
+melon
+listeria
+listeria
+Cruise
+melon
+listeria
+Fight
+Norovirus
+Listeria
+Salmonella
+measles
+State
+mumps
+Princeton
+Ebola
+Ebola
+Ebola
+mumps
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+measles
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+weather
+meningitis
+angeles
+Eye
+ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Ebola
+Salmonella
+ship
+Salmonella
+Ebola
+mumps
+Ebola
+Ebola
+Ebola
+mumps
+Ebola
+mumps
+mumps
+Africa
+Dengue
+Ebola
+mumps
+mumps
+Ebola
+Ebola
+Ebola
+measles
+Ohio
+Twister
+MERS
+salmonella
+killer
+MERS
+polio
+Polio
+Salmonella
+Ebola
+measles
+measles
+MERS
+Flu
+Tuberculosis
+Salmonella
+Cholera
+Cholera
+Ebola
+farms
+polio
+Record
+measles
+measles
+cholera
+Ebola
+norovirus
+Grasshopper
+Violent
+Ebola
+malaria
+malaria
+Ebola
+Ebola
+Ebola
+Ebola
+coli
+Ebola
+Ebola
+Ebola
+Ebola
+mumps
