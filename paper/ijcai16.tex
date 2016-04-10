@@ -12,6 +12,7 @@
 
 % Use the postscript times font!
 \usepackage{times}
+\usepackage{graphicx}
 
 % the following package is optional:
 %\usepackage{latexsym} 
@@ -36,11 +37,11 @@
 % page charge instructions.
 % Put where the files are available in the appropriate places.
 
-\title{IJCAI--16 Formatting Instructions\thanks{These match the formatting instructions of IJCAI-07. The support of IJCAI, Inc. is acknowledged.}}
-\author{Subbarao Kambhampati \\ 
-Arizona State University, Tempe Arizona  \\
-ijcai16programchair@gmail.com}
+\title{SL-FII: Syntactic and Lexical Constraints with Frequency based Iterative Improvement for disease mention recognition in News Headlines}
 
+\author{Sidak Pal Singh, Sopan Khosla, Manisha Patel \\ 
+IIT Roorkee  \\
+ijcai16programchair@gmail.com}
 \begin{document}
 
 \maketitle
@@ -71,176 +72,163 @@ mention normalization, i.e. by associating a unique identifier for each disease 
 
 The highlight of our approach is the ​Frequency-based Iterative Improvement that leads to more accurate results by weeding out the false positives.
 
-\subsection{Length of Papers}
 
-Each accepted full paper is allocated six pages in the conference 
-proceedings, excluded references. References can take up to one page.
-Up to two additional pages may be purchased at a price 
-of \$275 per page for any accepted paper. However, all 
-{\em submissions} must 
-be a maximum of six pages, plus at most one for references, in length.
+\section{Related Work}
+One of the essential requirements for a text mining application is the ability to identify relevant entities. In the past, several biomedical entity mention tasks have been explored such as gene/protein mention (Lu et al. 2011, Wei and Kao, 2011, Huang et al. 2011) and species/organism mention (Naderi et al. 2011). However, there have been few attempts in the domain of disease mention recognition.
+
+There has been some work on identifying diseases in clinical texts, especially in the
+context of CMC Medical NLP Challenge2 and i2b2 Challenge3 . But in general clinical texts
+are different from texts of biomedical literature, e.g. composition of short, telegraphic
+phrases, use of implicit templates and pseudo-tables, as noted by Meystre et al. (2008).
+Hence, the strategies adopted for NER on clinical texts are not the same as the ones
+practiced for NER on biomedical literature.
+
+The UTU approach of Kaewphan et.al, 2014 focusses on the task of disease mention
+recognition by using conditional random fields (CRFs) and vector space representations.
+Their work also focuses on disease mention normalization, for which they combine word
+vector representations and supervised machine learning to map the recognized
+mentions to the corresponding UMLS concepts.
+
+The currently used BNER systems are based on ML techniques such as CRFs, support
+vector machines (SVMs) etc (Dai et al., 2009). These systems use either gene/protein
+specific features (e.g. Greek alphabet matching) or post-processing rules (e.g. extension
+of the identified mention boundaries to the left when a single letter with a hyphen
+precedes them (Torii et al., 2009)) which might not be as effective for other semantic type identification as they are for genes/proteins. There is a substantial agreement in the feature set that these systems use (most of which are actually various orthographical and morphological features).
+
+The only systematic experimental results reported for disease mention recognition in
+biomedical literature using ML based approaches are published by Leaman and Gonzalez
+(2008) and Leaman et al. (2009). They have used a CRF based BNER system named
+BANNER which basically uses a set of orthographic, morphological and shallow syntactic features (Leaman and Gonzalez, 2008). The system achieves an F-score of 86.43 on the
+BioCreative II GM corpus5 which is one of the best results for gene mention recognition
+task on that corpus.
+
+The BANNER approach achieves an F-score of 54.84 for disease mention recognition on
+the BioText corpus (Leaman and Gonzalez, 2008). However, as said above, the BioText
+corpus contains annotation inconsistencies. So, the corpus is not ideal for comparing
+system performances. The AZDC corpus is much more suitable as it is annotated
+specifically for benchmarking of disease mention recognition systems. An improved
+version of BANNER achieves an F-score of 77.9 on AZDC corpus, which is the state of the
+art on ML based disease mention recognition in biomedical literature (Leaman et al.,
+2009).
 
 
-\subsection{Word Processing Software}
 
-As detailed below, IJCAI has prepared and made available a set of
-\LaTeX{} macros and a Microsoft Word template for use in formatting
-your paper. If you are using some other word processing software (such
-as WordPerfect, etc.), please follow the format instructions given
-below and ensure that your final paper looks as much like this sample
-as possible.
+\section{Proposed Solution}
 
-\section{Style and Format}
+Our solution involves four basic stages: Pre-processing, Relational Extraction, Frequency-based Iterative Improvement and Post-processing.
 
-\LaTeX{} and Word style files that implement these instructions
-can be retrieved electronically. (See Appendix~\ref{stylefiles} for
-instructions on how to obtain these files.)
+\subsection{Pre-processing}
 
-\subsection{Layout}
+The first step of pre-processing is to clean the corpus(headlines) which primarily involves handling apostrphe inconsistencies. After this we used NLTK to tokenize the headlines, which subsequently go through PoS(Parts of Speech) tagging. Sometimes News Headlines might contain grammatical inconsistencies like all words beginning with upper-case letters, incorrect or missing articles etc.  To handle such inconsistencies we used the following approach:
 
-Print manuscripts two columns to a page, in the manner in which these
-instructions are printed. The exact dimensions for pages are:
-\begin{itemize}
-\item left and right margins: .75$''$
-\item column width: 3.375$''$
-\item gap between columns: .25$''$
-\item top margin---first page: 1.375$''$
-\item top margin---other pages: .75$''$
-\item bottom margin: 1.25$''$
-\item column height---first page: 6.625$''$
-\item column height---other pages: 9$''$
-\end{itemize}
+1. Convert headlines to lower-case and then compare the respective POS tags of tokens with that of the original sentence.
 
-All measurements assume an 8-1/2$''$ $\times$ 11$''$ page size. For
-A4-size paper, use the given top and left margins, column width,
-height, and gap, and modify the bottom and right margins as necessary.
+2. If POS tag differs, use lower-case form else use the original one.
 
-\subsection{Format of Electronic Manuscript}
+eg. India Seeks Revenge From Australia
 
-For the production of the electronic manuscript, you must use Adobe's
-{\em Portable Document Format} (PDF). A PDF file can be generated, for
-instance, on Unix systems using {\tt ps2pdf} or on Windows systems
-using Adobe's Distiller. There is also a website with free software
-and conversion services: {\tt http://www.ps2pdf.com/}. For reasons of
-uniformity, use of Adobe's {\em Times Roman} font is strongly suggested. In
-\LaTeX2e{}, this is accomplished by putting
-\begin{quote} 
-\mbox{\tt $\backslash$usepackage\{times\}}
-\end{quote}
-in the preamble.\footnote{You may want also to use the package {\tt
-latexsym}, which defines all symbols known from the old \LaTeX{}
-version.}
-  
-Additionally, it is of utmost importance to specify the American {\bf
-letter} format (corresponding to 8-1/2$''$ $\times$ 11$''$) when
-formatting the paper. When working with {\tt dvips}, for instance, one
-should specify {\tt -t letter}.
+POS tagged: [('India', 'NNP'), ('Seeks', 'NNP'), ('Revenge', 'NNP'), ('From', 'NNP'), ('Australia', 'NNP')]
 
-\subsection{Title and Author Information}
+is compared to 
 
-Center the title on the entire width of the page in a 14-point bold
-font. Below it, center the author name(s) in a 12-point bold font, and
-then center the address(es) in a 12-point regular font. Credit to a
-sponsoring agency can appear on the first page as a footnote.
+india seeks revenge from australia
 
-\subsubsection{Blind Review}
+PoS tagged: [('india', 'NN'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('australia', 'NN')]
 
-In order to make blind reviewing possible, authors must omit their
-names and affiliations when submitting the paper for review. In place
-of names and affiliations, provide a list of content areas. When
-referring to one's own work, use the third person rather than the
-first person. For example, say, ``Previously,
-Gottlob~\shortcite{gottlob:nonmon} has shown that\ldots'', rather
-than, ``In our previous work~\cite{gottlob:nonmon}, we have shown
-that\ldots'' Try to avoid including any information in the body of the
-paper or references that would identify the authors or their
-institutions. Such information can be added to the final camera-ready
-version for publication.
+PoS tag of India still portrays a noun, thus maintaining the original form, whereas the PoS tag of "Seeks" changes from NNP to VBZ (noun to verb), thus it is lower-cased.
 
-\subsection{Abstract}
+So the given sentential form gets converted to 
 
-Place the abstract at the beginning of the first column 3$''$ from the
-top of the page, unless that does not leave enough room for the title
-and author information. Use a slightly smaller width than in the body
-of the paper. Head the abstract with ``Abstract'' centered above the
-body of the abstract in a 12-point bold font. The body of the abstract
-should be in the same font as the body of the paper.
+India seeks Revenge from Australia
 
-The abstract should be a concise, one-paragraph summary describing the
-general thesis and conclusion of your paper. A reader should be able
-to learn the purpose of the paper and the reason for its importance
-from the abstract. The abstract should be no more than 200 words long.
+POS tagged: [('India', 'NNP'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('Australia', 'NNP')]
 
-\subsection{Text}
 
-The main body of the text immediately follows the abstract. Use
-10-point type in a clear, readable font with 1-point leading (10 on
-11).
+\subsection{Relational Extraction}
 
-Indent when starting a new paragraph, except after major headings.
+In this section we introduce two constraints on relation phrases: syntactic and lexical constraints. We also discuss how to generalize this relational extraction model for entities pertaining to different domains. 
 
-\subsection{Headings and Sections}
+\subsubsection{Lexical Constraints}
 
-When necessary, headings should be used to separate major sections of
-your paper. (These instructions use many headings to demonstrate their
-appearance; your paper should have fewer headings.)
+Disease names can be classified as entities. Since news headlines contain multiple entities, we need to identify the correct set of entities that correspond to disease names. In other words, we need to formalize a context that signifies the occurrence of disease names. 
 
-\subsubsection{Section Headings}
+In order to define the context, we mine certain word roots that indicate the presence of disease names in headlines. The word roots are obtained such that they cover a significant portion of disease containing headlines. Some of the obtained word roots include: 
 
-Print section headings in 12-point bold type in the style shown in
-these instructions. Leave a blank space of approximately 10 points
-above and 4 points below section headings.  Number sections with
-arabic numerals.
+'diagnos' derivatives
 
-\subsubsection{Subsection Headings}
+'outbreak' derivatives
 
-Print subsection headings in 11-point bold type. Leave a blank space
-of approximately 8 points above and 3 points below subsection
-headings. Number subsections with the section number and the
-subsection number (in arabic numerals) separated by a
-period.
+'patient' derivatives
 
-\subsubsection{Subsubsection Headings}
+'cur' derivatives
 
-Print subsubsection headings in 10-point bold type. Leave a blank
-space of approximately 6 points above subsubsection headings. Do not
-number subsubsections.
+'vaccin' derivatives
 
-\subsubsection{Special Sections}
+'die' derivatives
 
-You may include an unnumbered acknowledgments section, including
-acknowledgments of help from colleagues, financial support, and
-permission to publish.
+'battl' derivatives
 
-Any appendices directly follow the text and look like sections, except
-that they are numbered with capital letters instead of arabic
-numerals.
+'symptom' derivatives
 
-The references section is headed ``References,'' printed in the same
-style as a section heading but without a number. A sample list of
-references is given at the end of these instructions. Use a consistent
-format for references, such as that provided by Bib\TeX{}. The reference
-list should not include unpublished work.
+'treat' derivatives
 
-\subsection{Citations}
+'virus' derivatives
 
-Citations within the text should include the author's last name and
-the year of publication, for example~\cite{gottlob:nonmon}.  Append
-lowercase letters to the year in cases of ambiguity.  Treat multiple
-authors as in the following examples:~\cite{abelson-et-al:scheme}
-or~\cite{bgf:Lixto} (for more than two authors) and
-\cite{brachman-schmolze:kl-one} (for two authors).  If the author
-portion of a citation is obvious, omit it, e.g.,
-Nebel~\shortcite{nebel:jair-2000}.  Collapse multiple citations as
-follows:~\cite{gls:hypertrees,levesque:functional-foundations}.
-\nocite{abelson-et-al:scheme}
-\nocite{bgf:Lixto}
-\nocite{brachman-schmolze:kl-one}
-\nocite{gottlob:nonmon}
-\nocite{gls:hypertrees}
-\nocite{levesque:functional-foundations}
-\nocite{levesque:belief}
-\nocite{nebel:jair-2000}
+'hospital' derivatives
+
+The derivatives imply the lemmatized forms of the keywords mentioned along with
+certain prepositions. For example, consider the derivatives of 'diagnos'
+
+[mis]diagnos(e|es|ed|is) [with|for|of|by]
+
+After this, we formulate the rules by analysing the PoS tags of these lexical constraints i.e. PoS tags of the
+different word root derivatives. Let us consider the example of formulation of rules for the
+'diagnos' derivative 'diagnoses' :
+
+
+\includegraphics[width=3.2in]{img/rules.png}
+
+\subsubsection{Syntactic Constraints}
+
+The syntactic constraint serves two purposes. First, it eliminates incoherent extractions, and second, it
+reduces uninformative extractions by capturing relation phrases
+expressed by only certain combinations. 
+
+The reason for it being that entities in news headlines generally occur as the regular expression given below:
+
+E = [DT][JJ]*(NN|NNP|NNS|NNPS)+
+
+Or in other words, phrases that contain an optional determiner or article (e.g. a, an)  followed by multiple optional adjectives (e.g. fractured) and atleast one occurence of noun (e.g. elbow, non-Hodgskins lymphoma) with a maximum chain length of four. 
+ 
+Since disease names basically represent a kind of entities, the above syntactic constraint extracts the potential disease name phrases from news headlines. For obvious reasons, we omit the determiner or article (represented by the PoS tag: DT), in order to get the disease names.
+
+For example, in the below headline: 
+
+Former Butler forward Andrew Smith diagnosed with non-Hodgskins lymphoma 
+
+The extracted disease name is 'non-Hodgskins lymphoma'.
+
+
+\subsubsection{Generalization}
+Since a basic entity is represented by the regular expression discussed earlier, our SL-FII approach can be generalized for entities of other domains. This can be possible via simple modification of lexical constraints as per the context requirements. 
+
+For example in order to identify the names of cricketers, we can use word roots like:
+
+'wicket haul' derivatives
+'ton' derivatives
+
+In the headlines below, we can successfully extract the cricketer's name using our SL-FII model.
+
+Gayle's 47-ball \textbf{ton} wipes out England 
+
+Ashwin's 5 \textbf{wicket haul} takes India to the semis
+
+
+\subsection{Frequency-based Iterative Improvement}
+
+In this section, we describe the details of the Frequency-based Iterative Improvement (FII) phase. 
+The constraints formulated above are then used to extract disease names from the corpus in an initial pass. Next, the potential disease names are passed through the FII phase.
+
 
 \subsection{Footnotes}
 
