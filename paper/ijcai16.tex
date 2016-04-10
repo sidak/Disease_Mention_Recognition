@@ -13,6 +13,7 @@
 % Use the postscript times font!
 \usepackage{times}
 \usepackage{graphicx}
+\usepackage{url}
 
 % the following package is optional:
 %\usepackage{latexsym} 
@@ -37,11 +38,11 @@
 % page charge instructions.
 % Put where the files are available in the appropriate places.
 
-\title{SL-FII: Syntactic and Lexical Constraints with Frequency based Iterative Improvement for disease mention recognition in News Headlines}
+\title{SL-FII: Syntactic and Lexical Constraints with Frequency based Iterative Improvement for Disease Mention Recognition in News Headlines}
 
 \author{Sidak Pal Singh, Sopan Khosla, Manisha Patel \\ 
-IIT Roorkee  \\
-ijcai16programchair@gmail.com}
+Indian Institute of Technology (IIT) Roorkee  \\
+sidakuec@iitr.ac.in, manipubt@iitr.ac.in}
 \begin{document}
 
 \maketitle
@@ -63,25 +64,18 @@ Difficulty of obtaining data (to train the model on) is one of the reasons for t
 
 We aim to identify the patterns in the news headlines that contain diseases and use them
 to generalize over diseases not seen until now. Correctly recognizing a disease mention is vital for further improvement of disease-centric knowledge extraction tasks. In this
-project, we aim to use a contextual multi-gram model that identifies the keywords that
+project, we aim to use a contextual multi-gram model that identifies the word roots that
 occur around disease mentions and extracts the sentence structure using rule-based
-inference techniques. Further, we will also try to observe the effect of incorporating the string similarity of query terms to the disease name and its recognized synonyms. 
+inference techniques. In other words, we use syntactic and lexical (SL) constraints to extract the disease names from headlines in an initial pass.  
 
-Also, we plan to validate the impact of our model, if we think of the problem as disease
-mention normalization, i.e. by associating a unique identifier for each disease mention.	
-
-The highlight of our approach is the ​Frequency-based Iterative Improvement that leads to more accurate results by weeding out the false positives.
+The highlight of our approach is the ​Frequency-based Iterative Improvement (FII) that leads to more accurate results by weeding out the false positives.
 
 
 \section{Related Work}
-One of the essential requirements for a text mining application is the ability to identify relevant entities. In the past, several biomedical entity mention tasks have been explored such as gene/protein mention (Lu et al. 2011, Wei and Kao, 2011, Huang et al. 2011) and species/organism mention (Naderi et al. 2011). However, there have been few attempts in the domain of disease mention recognition.
+One of the essential requirements for a text mining application is the ability to identify relevant entities. In the past, several biomedical entity mention tasks have been explored such as gene/protein mention (Lu et al. 2011, Wei and Kao, 2011, Huang et al. 2011) and species/organism mention (Naderi et al. 2011). However, there have been few attempts in the domain of disease mention recognition. Even in the attempts that have been made, the usage of news headlines is unique to our approach.
 
-There has been some work on identifying diseases in clinical texts, especially in the
-context of CMC Medical NLP Challenge2 and i2b2 Challenge3 . But in general clinical texts
-are different from texts of biomedical literature, e.g. composition of short, telegraphic
-phrases, use of implicit templates and pseudo-tables, as noted by Meystre et al. (2008).
-Hence, the strategies adopted for NER on clinical texts are not the same as the ones
-practiced for NER on biomedical literature.
+In general clinical texts are different from texts of biomedical literature, e.g. composition of short, telegraphic phrases, use of implicit templates and pseudo-tables, as noted by Meystre et al. (2008). The data from news is even more different. Though there has been some work on identifying diseases in clinical texts, especially in the context of CMC Medical NLP Challenge2 and i2b2 Challenge3, these strategies can't be used in
+practice for headlines data.
 
 The UTU approach of Kaewphan et.al, 2014 focusses on the task of disease mention
 recognition by using conditional random fields (CRFs) and vector space representations.
@@ -93,53 +87,50 @@ The currently used BNER systems are based on ML techniques such as CRFs, support
 vector machines (SVMs) etc (Dai et al., 2009). These systems use either gene/protein
 specific features (e.g. Greek alphabet matching) or post-processing rules (e.g. extension
 of the identified mention boundaries to the left when a single letter with a hyphen
-precedes them (Torii et al., 2009)) which might not be as effective for other semantic type identification as they are for genes/proteins. There is a substantial agreement in the feature set that these systems use (most of which are actually various orthographical and morphological features).
+precedes them (Torii et al., 2009)) which might not be as effective for other semantic type identification as they are for genes/proteins.
 
 The only systematic experimental results reported for disease mention recognition in
 biomedical literature using ML based approaches are published by Leaman and Gonzalez
 (2008) and Leaman et al. (2009). They have used a CRF based BNER system named
-BANNER which basically uses a set of orthographic, morphological and shallow syntactic features (Leaman and Gonzalez, 2008). The system achieves an F-score of 86.43 on the
-BioCreative II GM corpus5 which is one of the best results for gene mention recognition
-task on that corpus.
+BANNER which basically uses a set of orthographic, morphological and shallow syntactic features (Leaman and Gonzalez, 2008). 
 
-The BANNER approach achieves an F-score of 54.84 for disease mention recognition on
-the BioText corpus (Leaman and Gonzalez, 2008). However, as said above, the BioText
-corpus contains annotation inconsistencies. So, the corpus is not ideal for comparing
-system performances. The AZDC corpus is much more suitable as it is annotated
-specifically for benchmarking of disease mention recognition systems. An improved
-version of BANNER achieves an F-score of 77.9 on AZDC corpus, which is the state of the
-art on ML based disease mention recognition in biomedical literature (Leaman et al.,
-2009).
+Our system captures the way entities usually occur in news, which along with lexical constraints gives us the disease names. Apart from this, an advantage of our approach is that it can generalize for entities belonging to domains as different as cricket, politics etc. We illustrate this with an example in Section 3.3 . 
 
+
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=6.4in]{img/architecture.png}
+\caption{The architecture of our SL-FII system.}
+\label{fig:architecture}
+\end{figure*}
 
 
 \section{Proposed Solution}
 
-Our solution involves four basic stages: Pre-processing, Relational Extraction, Frequency-based Iterative Improvement and Post-processing.
+Our solution involves four basic stages: Pre-processing, Relational Extraction, Frequency-based Iterative Improvement and Post-processing. The architecture \footnote{The code for our system can be found at \\ \url{https://github.com/sidak/Disease_Mention_Recognition}} of our SL-FFI system is shown in Figure~\ref{fig:architecture}. 
 
 \subsection{Pre-processing}
 
 The first step of pre-processing is to clean the corpus(headlines) which primarily involves handling apostrphe inconsistencies. After this we used NLTK to tokenize the headlines, which subsequently go through PoS(Parts of Speech) tagging. Sometimes News Headlines might contain grammatical inconsistencies like all words beginning with upper-case letters, incorrect or missing articles etc.  To handle such inconsistencies we used the following approach:
+\begin{enumerate}
 
-1. Convert headlines to lower-case and then compare the respective POS tags of tokens with that of the original sentence.
+\item Convert headlines to lower-case and then compare the respective POS tags of tokens with that of the original sentence.
 
-2. If POS tag differs, use lower-case form else use the original one.
+\item If POS tag differs, use lower-case form else use the original one.
+\end{enumerate}
 
-eg. India Seeks Revenge From Australia
+eg. \textit{"India Seeks Revenge From Australia"}
 
-POS tagged: [('India', 'NNP'), ('Seeks', 'NNP'), ('Revenge', 'NNP'), ('From', 'NNP'), ('Australia', 'NNP')]
+POS tagged: [('India', 'NNP'), ('Seeks', 'NNP'), ('Revenge', 'NNP'), ('From', 'NNP'), ('Australia', 'NNP')]\\
 
-is compared to 
+is compared to \textit{"india seeks revenge from australia"}
 
-india seeks revenge from australia
+PoS tagged: [('india', 'NN'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('australia', 'NN')]\\
 
-PoS tagged: [('india', 'NN'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('australia', 'NN')]
+PoS tag of India still portrays a noun, thus maintaining the original form, whereas the PoS tag of "Seeks" changes from NNP to VBZ (noun to verb), thus it is lower-cased.\\
 
-PoS tag of India still portrays a noun, thus maintaining the original form, whereas the PoS tag of "Seeks" changes from NNP to VBZ (noun to verb), thus it is lower-cased.
-
-So the given sentential form gets converted to 
-
-India seeks Revenge from Australia
+So the given sentential form gets converted to \textit{"India seeks Revenge from Australia"}
 
 POS tagged: [('India', 'NNP'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('Australia', 'NNP')]
 
@@ -148,45 +139,72 @@ POS tagged: [('India', 'NNP'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN
 
 In this section we introduce two constraints on relation phrases: syntactic and lexical constraints. We also discuss how to generalize this relational extraction model for entities pertaining to different domains. 
 
+\begin{table}[h]
+  \caption{Notation used for PoS tags.}
+  \centering
+  \begin{tabular}{|l|l|} \hline
+  \label{tab:pos-notation}
+  \textbf{Symbol} & \textbf{Description} \\ \hline
+  $DT$   & determiner\\ \hline
+  $JJ$   & adjective\\ \hline
+  $NN$   & noun, singular  \\ \hline
+  $NNS$   & noun plural    \\ \hline
+  $NNP$   & proper noun, singular      \\ \hline
+  $NNPS$   & proper noun, plural	 \\ \hline
+  $RB$   & adverb    \\ \hline
+  $VB$   & verb, base form    \\ \hline
+  $VBZ$   & verb, 3rd person\\ \hline
+  
+  \end{tabular}
+\end{table}
+
 \subsubsection{Lexical Constraints}
 
 Disease names can be classified as entities. Since news headlines contain multiple entities, we need to identify the correct set of entities that correspond to disease names. In other words, we need to formalize a context that signifies the occurrence of disease names. 
 
 In order to define the context, we mine certain word roots that indicate the presence of disease names in headlines. The word roots are obtained such that they cover a significant portion of disease containing headlines. Some of the obtained word roots include: 
 
-'diagnos' derivatives
+\begin{itemize}
+\item 'diagnos' derivatives
 
-'outbreak' derivatives
+\item 'outbreak' derivatives
 
-'patient' derivatives
+\item 'patient' derivatives
 
-'cur' derivatives
+\item 'cur' derivatives
 
-'vaccin' derivatives
+\item 'vaccin' derivatives
 
-'die' derivatives
+\item 'die' derivatives
 
-'battl' derivatives
+\item 'battl' derivatives
 
-'symptom' derivatives
+\item 'symptom' derivatives
 
-'treat' derivatives
+\item 'treat' derivatives
 
-'virus' derivatives
+\item 'virus' derivatives
 
-'hospital' derivatives
+\item 'hospital' derivatives
 
+\end{itemize}
 The derivatives imply the lemmatized forms of the keywords mentioned along with
-certain prepositions. For example, consider the derivatives of 'diagnos'
+certain prepositions. For example, consider the derivatives of 'diagnos'\\
 
-[mis]diagnos(e|es|ed|is) [with|for|of|by]
+\textit{[mis]diagnos(e  $|$ es $|$ ed $|$ is) [with $|$ for $|$ of  $|$ by]}\\ 
 
 After this, we formulate the rules by analysing the PoS tags of these lexical constraints i.e. PoS tags of the
 different word root derivatives. Let us consider the example of formulation of rules for the
 'diagnos' derivative 'diagnoses' :
 
 
+\begin{figure}[h]
+\centering
 \includegraphics[width=3.2in]{img/rules.png}
+\caption{Rules for word root 'diagnos'.}
+\label{fig:rules}
+\end{figure}
+
 
 \subsubsection{Syntactic Constraints}
 
@@ -196,32 +214,31 @@ expressed by only certain combinations.
 
 The reason for it being that entities in news headlines generally occur as the regular expression given below:
 
-E = [DT][JJ]*(NN|NNP|NNS|NNPS)+
+\[E = [DT][JJ]^*(NN|NNP|NNS|NNPS)^+\]
 
 Or in other words, phrases that contain an optional determiner or article (e.g. a, an)  followed by multiple optional adjectives (e.g. fractured) and atleast one occurence of noun (e.g. elbow, non-Hodgskins lymphoma) with a maximum chain length of four. 
  
-Since disease names basically represent a kind of entities, the above syntactic constraint extracts the potential disease name phrases from news headlines. For obvious reasons, we omit the determiner or article (represented by the PoS tag: DT), in order to get the disease names.
+Since disease names basically represent a kind of entities, the above syntactic constraint extracts the potential disease name phrases from news headlines. For obvious reasons, we omit the determiner or article (represented by the PoS tag: DT), in order to get the disease names. For example, in the below headline: \\
 
-For example, in the below headline: 
+\textit{Former Butler forward Andrew Smith \textbf{diagnosed with} non-Hodgskins lymphoma 
+}\\
 
-Former Butler forward Andrew Smith diagnosed with non-Hodgskins lymphoma 
-
-The extracted disease name is 'non-Hodgskins lymphoma'.
+The extracted disease name is \textit{'non-Hodgskins lymphoma'}.
 
 
 \subsubsection{Generalization}
-Since a basic entity is represented by the regular expression discussed earlier, our SL-FII approach can be generalized for entities of other domains. This can be possible via simple modification of lexical constraints as per the context requirements. 
+Since a basic entity is represented by the regular expression discussed earlier, our SL-FII approach can be generalized for entities of other domains. This can be possible via simple modification of lexical constraints as per the context requirements. For example in order to identify the names of cricketers, we can use word roots like:
 
-For example in order to identify the names of cricketers, we can use word roots like:
+\begin{itemize}
+\item 'wicket haul' derivatives
+\item 'ton' derivatives
+\end{itemize}
 
-'wicket haul' derivatives
-'ton' derivatives
+In the headlines below, we can successfully extract the cricketer's name using our SL-FII model.\\
 
-In the headlines below, we can successfully extract the cricketer's name using our SL-FII model.
+\textit{Gayle's 47-ball \textbf{ton} wipes out England }
 
-Gayle's 47-ball \textbf{ton} wipes out England 
-
-Ashwin's 5 \textbf{wicket haul} takes India to the semis
+\textit{Ashwin's 5 \textbf{wicket haul} takes India to the semis}
 
 
 \subsection{Frequency-based Iterative Improvement}
@@ -229,6 +246,23 @@ Ashwin's 5 \textbf{wicket haul} takes India to the semis
 In this section, we describe the details of the Frequency-based Iterative Improvement (FII) phase. 
 The constraints formulated above are then used to extract disease names from the corpus in an initial pass. Next, the potential disease names are passed through the FII phase.
 
+Citations within the text should include the author's last name and
+the year of publication, for example~\cite{gottlob:nonmon}.  Append
+lowercase letters to the year in cases of ambiguity.  Treat multiple
+authors as in the following examples:~\cite{abelson-et-al:scheme}
+or~\cite{bgf:Lixto} (for more than two authors) and
+\cite{brachman-schmolze:kl-one} (for two authors).  If the author
+portion of a citation is obvious, omit it, e.g.,
+Nebel~\shortcite{nebel:jair-2000}.  Collapse multiple citations as
+follows:~\cite{gls:hypertrees,levesque:functional-foundations}.
+\nocite{abelson-et-al:scheme}
+\nocite{bgf:Lixto}
+\nocite{brachman-schmolze:kl-one}
+\nocite{gottlob:nonmon}
+\nocite{gls:hypertrees}
+\nocite{levesque:functional-foundations}
+\nocite{levesque:belief}
+\nocite{nebel:jair-2000}
 
 \subsection{Footnotes}
 
