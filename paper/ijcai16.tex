@@ -214,7 +214,7 @@ expressed by only certain combinations.
 
 The reason for it being that entities in news headlines generally occur as the regular expression given below:
 
-\[E = [DT][JJ]^*(NN|NNP|NNS|NNPS)^+\]
+\[E = [DT](JJ)^*(NN|NNP|NNS|NNPS)^+\]
 
 Or in other words, phrases that contain an optional determiner or article (e.g. a, an)  followed by multiple optional adjectives (e.g. fractured) and atleast one occurence of noun (e.g. elbow, non-Hodgskins lymphoma) with a maximum chain length of four. 
  
@@ -245,6 +245,38 @@ In the headlines below, we can successfully extract the cricketer's name using o
 
 In this section, we describe the details of the Frequency-based Iterative Improvement ($FII$) phase. 
 The constraints formulated above are then used to extract disease names from the corpus in an initial pass. Next, the potential disease names are passed through the $FII$ phase.
+The knowledge we obtained from the first pass represents the potential disease names in corpus based on SL(Syntactic-Lexical) analysis. In order to filter out false positives, we used FII to give scores (based on probability of a word to be a disease name) to output of initial pass.
+The approach is as follows:
+Based on the training set, 
+1. A weight is assigned to lexical rules which corresponds to the probability that the phrase extracted from that lexical rule is a valid disease-name.
+  P(disease = True / lexical_rule <sub>i</sub>) = weight[lexical_rule <sub>i</sub>]
+e.g. Rules like 'diagnosed with' gave better results than rules like 'Outbreak' (which also gave false positives for natural disasters). Thus much higher weight is associated with phrases output via 'diagnosed with'. 
+
+2. A normalized frequency is associated with the output phrases of pass-1 which corresponds to the probability of that phrase occuring with the lexical rule in consideration. 
+  P(phrase Intersection lexical_rule <sub> i</sub>) = P(phrase / lexical_rule <sub> i</sub>) * P(lexical_rule <sub> i</sub>) = (frequency[lexical_rule <sub> i</sub>][phrase]/ frequency_in_corpus[lexical_rule <sub> i</sub>]) * (frequency_in_corpus[lexical_rule <sub> i</sub>]/size_of_total_corpus)
+
+3. Final score (also termed as Disease Expectancy Score(DES)) is calculated taking into account the above probabilities for each rule. 
+  DES[phrase <sub> j</sub>] = Summation (on all lexical rules) weight[lexical_rule <sub>i</sub>] * (frequency[lexical_rule <sub> i</sub>][phrase]/size_of_total_corpus)
+
+The score is equivalent to finding the probability that the phrase detected after intial pass is a disease.
+
+  P(disease = True/ phrase <sub> j</sub>) = Summation (on all lexical rules) P((disease = True/ phrase <sub> j</sub>)/lexical_rule <sub>i</sub>) * P(lexical_rule <sub> i</sub>)
+  (using Bayes theorem)
+
+  P((disease = True/ phrase <sub> j</sub>)/lexical_rule <sub>i</sub>) = P(disease = True/ lexical_rule <sub>i</sub>)
+
+We hypothesise that the probability of a word being a disease is not determined from the word but from the accuracy that the lexical_rule provides.
+It can be shown using Bayesian network as given in the diagram. Using Markov's rule in this network validates our hypothesis. 
+DIAGRAM{disease.png}
+
+Therefore, P(disease = True/ phrase <sub> j</sub>) = Summation (on all lexical rules) P(disease = True/lexical_rule <sub>i</sub>) * P(lexical_rule <sub> i</sub>)
+
+FII increases accuracy and reduces false positives based on probabilistic measures. Words with higher DES have higher chances of being a valid disease-name. Phrases which occur with more rules are more reliable as a disease-name. 
+e.g. Both Ebola and Tornado occur with 'outbreak', but Ebola can also occur with 'diagnosed with', 'died of' and several other rules whereas Tornado cannot. Thus FII increases belief in Ebola as a valid disease-name. 
+
+\subsection{Post-processing}
+The results of FII are sent for post-processing. Firstly we normalize the results and then analyse them based on its temporal distribution. Valid disease-names show distinct peaks whereas non-disease entities show uniform distribution over the specified time-interval. 
+
 
 \section{Conclusion}
 In this paper, we use lexical to first identify potential disease headlines and then syntactic constraints to extract the disease name phrase. Later, we pass the extracted disease names through $FII$ to weed out false diseases names based on the the previous experience gained in recognizing disease mentions with different word roots. As a result, the $FII$ phase improves significantly both the accuracy and recall of our system. In the future, we also plan to incorporate sequential pattern mining techniques to automatically identify syntactic and lexical constraints.  
