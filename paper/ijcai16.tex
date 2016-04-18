@@ -70,6 +70,7 @@ inference techniques. In other words, we use syntactic and lexical ($SL$) constr
 
 The highlight of our approach is the ​Frequency-based Iterative Improvement ($FII$) that leads to more accurate results by weeding out the false positives.
 
+We used a total of 664163 headlines for year 2014 and 408052 headlines for year 2015, using our inhouse IMM system. Our $SL-FII$ system was able to extract a total of 3157 and 5058 correct disease names for 2014 and 2015 respectively. 
 
 \section{Related Work}
 One of the essential requirements for a text mining application is the ability to identify relevant entities. In the past, several biomedical entity mention tasks have been explored such as gene/protein mention (Lu et al. 2011, Wei and Kao, 2011, Huang et al. 2011) and species/organism mention (Naderi et al. 2011). However, there have been few attempts in the domain of disease mention recognition. Even in the attempts that have been made, the usage of news headlines is unique to our approach.
@@ -87,7 +88,7 @@ The currently used BNER systems are based on ML techniques such as CRFs, support
 vector machines (SVMs) etc (Dai et al., 2009). These systems use either gene/protein
 specific features (e.g. Greek alphabet matching) or post-processing rules (e.g. extension
 of the identified mention boundaries to the left when a single letter with a hyphen
-precedes them (Torii et al., 2009)) which might not be as effective for other semantic type identification as they are for genes/proteins.
+precedes them (Torii et al., 2009) which might not be as effective for other semantic type identification as they are for genes/proteins.
 
 The only systematic experimental results reported for disease mention recognition in
 biomedical literature using ML based approaches are published by Leaman and Gonzalez
@@ -100,7 +101,7 @@ Our system captures the way entities usually occur in news, which along with lex
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=6.4in]{img/architecture.png}
+\includegraphics[width=6.4in]{img/Architecture2.png}
 \caption{The architecture of our $SL-FII$ system.}
 \label{fig:architecture}
 \end{figure*}
@@ -112,15 +113,17 @@ Our solution involves four basic stages: Pre-processing, Relational Extraction, 
 
 \subsection{Pre-processing}
 
-The first step of pre-processing is to clean the corpus(headlines) which primarily involves handling apostrphe inconsistencies. After this we used NLTK to tokenize the headlines, which subsequently go through PoS(Parts of Speech) tagging. Sometimes News Headlines might contain grammatical inconsistencies like all words beginning with upper-case letters, incorrect or missing articles etc.  To handle such inconsistencies we used the following approach:
+The first step of pre-processing is to clean the corpus(headlines) which primarily involves handling apostrphe inconsistencies. After this we used NLTK to tokenize the headlines, which subsequently go through PoS(Parts of Speech) tagging. Sometimes news headlines might contain grammatical inconsistencies like all words beginning with upper-case letters, incorrect or missing articles etc.  To handle such inconsistencies we used the following approach:
 \begin{enumerate}
 
-\item Convert headlines to lower-case and then compare the respective POS tags of tokens with that of the original sentence.
+\item Convert headlines to lower-case and then compare the respective PoS tags of tokens with that of the original sentence.
 
-\item If POS tag differs, use lower-case form else use the original one.
+\item If PoS tag differs, use lower-case form else use the original one.
 \end{enumerate}
 
-eg. \textit{"India Seeks Revenge From Australia"}
+The symbols for the PoS tags and their corresponding description is shown in Table~\ref{tab:pos-notation}. Consider the following example headline,
+
+\textit{"India Seeks Revenge From Australia"}
 
 POS tagged: [('India', 'NNP'), ('Seeks', 'NNP'), ('Revenge', 'NNP'), ('From', 'NNP'), ('Australia', 'NNP')]\\
 
@@ -132,7 +135,7 @@ PoS tag of India still portrays a noun, thus maintaining the original form, wher
 
 So the given sentential form gets converted to \textit{"India seeks Revenge from Australia"}
 
-POS tagged: [('India', 'NNP'), ('seeks', 'VBZ'), ('revenge', 'NN'), ('from', 'IN'), ('Australia', 'NNP')]
+POS tagged: [('India', 'NNP'), ('seeks', 'VBZ'), ('Revenge', 'NNP'), ('from', 'IN'), ('Australia', 'NNP')]
 
 
 \subsection{Relational Extraction}
@@ -162,14 +165,12 @@ In this section we introduce two constraints on relation phrases: syntactic and 
 
 Disease names can be classified as entities. Since news headlines contain multiple entities, we need to identify the correct set of entities that correspond to disease names. In other words, we need to formalize a context that signifies the occurrence of disease names. 
 
-In order to define the context, we mine certain word roots that indicate the presence of disease names in headlines. The word roots are obtained such that they cover a significant portion of disease containing headlines. Some of the obtained word roots include: 
+In order to define the context, we mine certain word roots that indicate the presence of disease names in headlines. The word roots are obtained such that they cover a significant portion of disease containing headlines. We use a total of 10 word roots which are listed as follows: 
 
 \begin{itemize}
 \item 'diagnos' derivatives
 
 \item 'outbreak' derivatives
-
-\item 'patient' derivatives
 
 \item 'cur' derivatives
 
@@ -177,11 +178,11 @@ In order to define the context, we mine certain word roots that indicate the pre
 
 \item 'die' derivatives
 
-\item 'battl' derivatives
+\item 'battling' derivatives
 
 \item 'symptom' derivatives
 
-\item 'treat' derivatives
+\item 'treatment' derivatives
 
 \item 'virus' derivatives
 
@@ -254,10 +255,7 @@ Based on the training set,
 
 e.g. Rules like 'diagnosed with' gave better results than rules like 'Outbreak' (which also gave false positives for natural disasters). Thus much higher weight is associated with phrases output via 'diagnosed with'. 
 
-\item A normalized frequency is associated with the output phrases of pass-1 which corresponds to the probability of that phrase occuring with the lexical rule in consideration, as shown by Equation~\ref{eq:3} and Equation~\ref{eq:4}. 
-
-
-\begin{figure*}[!t]
+\begin{figure*}[t!]
 
 \begin{equation}
 P(disease = True | phrase_j) = \sum_{all\_lexical\_rules} P(disease = True | phrase_j \cap lexical\_rule_i) \times P(phrase_j \cap lexical\_rule_i)
@@ -283,7 +281,7 @@ P(phrase \cap lexical\_rule_i) = P( phrase | lexical\_rule_i) \times  P(lexical\
 
 
 \begin{equation}
-DES \lbrack phrase_j \rbrack = \sum_{all\_lexical\_rules} weight \lbrack lexical\_rule_i \rbrack \times \frac{frequency \lbrack lexical\_rule_i \rbrack \lbrack phrase_j \rbrack}  {size\_of\_total\_corpus}
+DES \lbrack phrase_j \rbrack = \sum_{all\_lexical\_rules} weight \lbrack lexical\_rule_i \rbrack \times frequency \lbrack lexical\_rule_i \rbrack \lbrack phrase_j \rbrack  
 \label{eq:5}
 \end{equation}
 
@@ -292,6 +290,11 @@ DES \lbrack phrase_j \rbrack = \sum_{all\_lexical\_rules} weight \lbrack lexical
 
 \hrulefill
 \end{figure*}
+
+
+\item A normalized frequency is associated with the output phrases of pass-1 which corresponds to the probability of that phrase occuring with the lexical rule in consideration, as shown by Equation~\ref{eq:3} and Equation~\ref{eq:4}. 
+
+
 
 
 \item Final score (also termed as Disease Expectancy Score($DES$) in Equation~\ref{eq:5}) is calculated taking into account the above probabilities for each rule. 
@@ -319,8 +322,95 @@ The results of $FII$ are sent for post-processing. Firstly we normalize the resu
 
 The constraints formulated above are then used to extract disease names from the corpus in an initial pass. Next, the potential disease names are passed through the $FII$ phase.
 
+\section{Observations}
+
+Table~\ref{tab:dis-freq} shows some of the extracted diseases with their corresponding frequency in the headlines for year 2014 and 2015. 
+
+\begin{table}[h]
+  \caption{Example of extracted diseases with frequency.}
+  \centering
+  \begin{tabular}{|l|l|l|} \hline
+  \label{tab:dis-freq}
+  \textbf{Disease Name} & \textbf{\# instances in 2014} & \textbf{\# instances in 2015}\\ \hline
+  Cancer & 1072 & 494 \\ \hline
+  Ebola & 182 & 990 \\ \hline
+  HIV & 276 & 343 \\ \hline
+  Measles & 72 & 141 \\ \hline
+  Hodgkin lymphoma & 2 & 7 \\ \hline
+  
+  \end{tabular}
+\end{table}
+
+
+Table~\ref{tab:dis-headlines} shows a sample of potential disease names extracted from  headlines using syntactic and lexical (SL) constraints. The 5th headline is a sample false positive, where SL constraints incorrectly label Greece as a disease. But this will be handled once we pass it through $FII$, as illustrated in Table~\ref{tab:dis-DES}. The DES value of Greece is 0.32 which is much less than the DES values for other entities and can be filtered out as per the threshold accepted DES value. This threshold can be decided on the basis of accuracy requirements.  \\ 
+\\
+
+\begin{table}[h]
+  \caption{Diseases extracted from headlines using $SL$ rules}
+  \centering
+  \begin{tabular}{|p{4cm}|p{2cm}|p{1.5cm}|} \hline
+  \label{tab:dis-headlines}
+  \textbf{Headline} & \textbf{Lexical rule} & \textbf{Disease name extracted} \\ \hline
+  Healthcare worker in Scotland diagnosed with Ebola & diagnosed with & Ebola \\ \hline
+  Beyonce Reaches Out to Grieving Family of Teen Who Died of Cancer & died of & Cancer \\ \hline
+  Bird flu outbreak in Kottayam, Alappuzha & outbreak & Bird flu \\ \hline
+  
+   More details on Dan Uggla's concussion symptoms & symptoms & Concussion \\ \hline
+  IMF rules out special treatment for Greece & treatment for & Greece \\ \hline
+ 
+  
+  \end{tabular}
+\end{table}
+
+\begin{table}[h]
+  \caption{Disease Expectancy Scores after $FII$}
+  \centering
+  \begin{tabular}{|l|l|} \hline
+  \label{tab:dis-DES}
+  \textbf{Disease} & \textbf{DES} \\ \hline
+  Ebola & 80.13 \\ \hline  
+  Cancer & 14.66 \\ \hline  
+  Bird Flu & 12.38 \\ \hline  
+  Concussion & 1.86 \\ \hline  
+  Greece & 0.32 \\ \hline
+  
+  \end{tabular}
+\end{table}
+
+Observed accuracy on test data (headlines of 2015), before post-processing, with extracted disease names sorted in descending order of their DES values is shown in Table~\ref{tab:acc-pre}.
+
+\begin{table}[h]
+  \caption{Accuracy on test data \textbf{before} post-processing}
+  \centering
+  \begin{tabular}{|l|l|} \hline
+  \label{tab:acc-pre}
+  \textbf{Top-k diseases (distinct)} & \textbf{\% accuracy} \\ \hline
+  $k = 10$  & 100.00 \\ \hline  
+  $k = 20$  & 100.00 \\ \hline  
+  $k = 30$  & 86.67 \\ \hline  
+  $k = 50$  & 80.00 \\ \hline  
+  \end{tabular}
+\end{table}
+\vspace{-15pt}
+\begin{table}[h!]
+  \caption{Accuracy on test data \textbf{after} post-processing}
+  \centering
+  \begin{tabular}{|l|l|} \hline
+  \label{tab:acc-post}
+  \textbf{Top-k diseases (distinct)} & \textbf{\% accuracy} \\ \hline
+  $k = 10$  & 100.00 \\ \hline  
+  $k = 20$  & 100.00 \\ \hline  
+  $k = 30$  & 96.67 \\ \hline  
+  $k = 50$  & 92.00 \\ \hline  
+  \end{tabular}
+\end{table}
+
+Once temporal post-processing is done, this accuracy will get improved by a great extent since uniformly occuring words like 'fight', 'water', 'state' etc. will be filtered out. The accuracy after post-processing is shown in Table~\ref{tab:acc-post}.
+ 
+ 
 \section{Conclusion}
 In this paper, we use lexical to first identify potential disease headlines and then syntactic constraints to extract the disease name phrase. Later, we pass the extracted disease names through $FII$ to weed out false diseases names based on the the previous experience gained in recognizing disease mentions with different word roots. As a result, the $FII$ phase improves significantly both the accuracy and recall of our system. In the future, we also plan to incorporate sequential pattern mining techniques to automatically identify syntactic and lexical constraints.  
+
 %% The file named.bst is a bibliography style file for BibTeX 0.99c
 \bibliographystyle{named}
 \bibliography{ijcai16}
